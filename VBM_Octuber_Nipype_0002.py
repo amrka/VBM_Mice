@@ -15,21 +15,23 @@ from nipype.pipeline.engine import Workflow, Node, MapNode
 import numpy as np
 import matplotlib.pyplot as plt
 from nipype.interfaces.matlab import MatlabCommand
-MatlabCommand.set_default_paths('/media/amr/HDD/Sofwares/spm12/')
+# MatlabCommand.set_default_paths('/media/amr/HDD/Sofwares/spm12/')
 MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
-experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
+experiment_dir = '/home/in/aeed/Work/October_Acquistion/'
 
-# subject_list = ['229', '230', '232', '233', '234',
-#                 '235', '236', '237', '242', '243',
-#                 '244', '245', '252', '253', '255',
-#                 '261', '262', '263', '264', '271',
-#                 '272', '273', '274', '281', '282',
-#                 '286', '287', '288', '362', '363',
-#                 '364', '365', '366', 'Agarose']
-subject_list = ['274', '362']
+subject_list = ['229', '230', '232', '233', '234',
+                '235', '236', '237', '242', '243',
+                '244', '245', '252', '253', '255',
+                '261', '262', '263', '264', '271',
+                '272', '273', '274', '281', '282',
+                '286', '287', '288', '362', '363',
+                '364', '365', '366', 'Agarose']
+
+
+# subject_list = ['274', '362']
 
 
 output_dir  = 'VBM/VBM_output_preproc'
@@ -70,13 +72,13 @@ datasink.inputs.substitutions = substitutions
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
 #Template and priors
-study_based_template = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext.nii.gz'
-# study_based_template = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped.nii.gz'
-study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz'
-# study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped_mask.nii.gz'
-GM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-WM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-CSF = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
+study_based_template = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext.nii.gz'
+# study_based_template = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped.nii.gz'
+study_based_template_mask = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz'
+# study_based_template_mask = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped_mask.nii.gz'
+GM  = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
+WM  = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
+CSF = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
@@ -246,4 +248,4 @@ VBM_workflow.connect ([
 
 
 VBM_workflow.write_graph(graph2use='flat')
-VBM_workflow.run('MultiProc', plugin_args={'n_procs': 8})
+VBM_workflow.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
