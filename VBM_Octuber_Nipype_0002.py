@@ -29,7 +29,7 @@ experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 #                 '272', '273', '274', '281', '282',
 #                 '286', '287', '288', '362', '363',
 #                 '364', '365', '366', 'Agarose']
-subject_list = ['274', '362', '230', '282']
+subject_list = ['274', '362']
 
 
 output_dir  = 'VBM/VBM_output_preproc'
@@ -71,7 +71,9 @@ datasink.inputs.substitutions = substitutions
 # In[1]:
 #Template and priors
 study_based_template = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext.nii.gz'
+# study_based_template = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped.nii.gz'
 study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz'
+# study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped_mask.nii.gz'
 GM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
 WM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
 CSF = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
@@ -108,7 +110,7 @@ reg_sub_to_temp.inputs.fixed_image=study_based_template
 reg_sub_to_temp.inputs.args='--float'
 reg_sub_to_temp.inputs.collapse_output_transforms=True
 reg_sub_to_temp.inputs.initial_moving_transform_com=True
-reg_sub_to_temp.inputs.num_threads=1
+reg_sub_to_temp.inputs.num_threads=4
 reg_sub_to_temp.inputs.output_inverse_warped_image=True
 reg_sub_to_temp.inputs.output_warped_image=True
 reg_sub_to_temp.inputs.sigma_units=['vox']*3
