@@ -77,8 +77,8 @@ study_based_template = '/home/in/aeed/Work/October_Acquistion/VBM/registration/V
 study_based_template_mask = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz'
 # study_based_template_mask = '/home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped_mask.nii.gz'
 GM  = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-WM  = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-CSF = '/home/in/aeed/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
+WM  = '/home/in/aeed/Work/October_Acquistion/VBM/registration/WM_to_VBM.nii.gz'
+CSF = '/home/in/aeed/Work/October_Acquistion/VBM/registration/CSF_to_VBM.nii.gz'
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
@@ -175,7 +175,7 @@ denoise.inputs.output_image = 'denoised.nii.gz'
 atropos = Node(ants.Atropos(), name = 'Atropos')
 
 atropos.inputs.dimension = 3
-atropos.inputs.initialization = 'KMeans'
+atropos.inputs.initialization = 'PriorProbabilityImages'
 atropos.inputs.prior_probability_images = [CSF,GM,WM]
 atropos.inputs.number_of_tissue_classes = 6
 atropos.inputs.prior_weighting = 0.8
@@ -271,6 +271,7 @@ VBM_workflow.connect ([
   ])
 
 
+# VBM_workflow.write_graph(graph2use='flat')
+# VBM_workflow.run('MultiProc', plugin_args={'n_procs': 8})
 VBM_workflow.write_graph(graph2use='colored', format='png', simple_form=True)
 VBM_workflow.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
-# VBM_workflow.run(plugin='MultiProc',plugin_args={'n_procs':8})
