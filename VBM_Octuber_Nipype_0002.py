@@ -75,8 +75,8 @@ study_based_template = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registrat
 study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz'
 # study_based_template_mask = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/VBM_to_TMBTA_InverseWarped_mask.nii.gz'
 GM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-WM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
-CSF = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/GM_to_VBM.nii.gz'
+WM  = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/WM_to_VBM.nii.gz'
+CSF = '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration/CSF_to_VBM.nii.gz'
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
@@ -163,7 +163,7 @@ jacobian.inputs.outputImage = 'Jacobian.nii.gz'
 atropos = Node(ants.Atropos(), name = 'Atropos')
 
 atropos.inputs.dimension = 3
-atropos.inputs.initialization = 'KMeans'
+atropos.inputs.initialization = 'PriorProbabilityImages'
 atropos.inputs.prior_probability_images = [CSF,GM,WM]
 atropos.inputs.number_of_tissue_classes = 3
 atropos.inputs.prior_weighting = 0.8
