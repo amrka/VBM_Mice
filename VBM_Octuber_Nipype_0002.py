@@ -189,7 +189,7 @@ atropos.inputs.save_posteriors = True
 def Get_GM(posteriors):
 	import nibabel as nb
 	input = posteriors
-	GM = posteriors[3] #posterior_01
+	GM = posteriors[1] #posterior_01
 	print (GM)
 	return GM
 
