@@ -37,4 +37,4 @@ randomise_parallel \
 -o VBM_FWHM_3 \
 -m /home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz  \
 -d design_VBM.mat -t design_VBM.con \
--n 10000 -x --uncorrp -T -V;
+-n 5000 --uncorrp -T -V;
