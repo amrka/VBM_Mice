@@ -162,22 +162,13 @@ jacobian.inputs.outputImage = 'Jacobian.nii.gz'
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
-#Denoise, obviuosly it improves the segmentation
-denoise = Node(ants.DenoiseImage(), name = 'denoise_image')
-denoise.inputs.dimension = 3
-denoise.inputs.output_image = 'denoised.nii.gz'
-#-----------------------------------------------------------------------------------------------------
-
-
-
-# In[1]:
 #Tissue segmentation
 atropos = Node(ants.Atropos(), name = 'Atropos')
 
 atropos.inputs.dimension = 3
 atropos.inputs.initialization = 'PriorProbabilityImages'
 atropos.inputs.prior_probability_images = [CSF,GM,WM]
-atropos.inputs.number_of_tissue_classes = 6
+atropos.inputs.number_of_tissue_classes = 3
 atropos.inputs.prior_weighting = 0.8
 atropos.inputs.prior_probability_threshold = 0.0000001
 atropos.inputs.likelihood_model = 'Gaussian'
@@ -198,23 +189,14 @@ atropos.inputs.save_posteriors = True
 def Get_GM(posteriors):
 	import nibabel as nb
 	input = posteriors
-	GM1 = posteriors[3] #posterior_04
-	GM2 = posteriors[4] #posterior_05
-	print (GM1, GM2)
-	return GM1, GM2
+	GM = posteriors[3] #posterior_01
+	print (GM)
+	return GM
 
 get_gm = Node(name ='Get_GM',
           interface = Function(input_names = ['posteriors'],
-          output_names = ['GM1', 'GM2'],
+          output_names = ['GM'],
           function = Get_GM))
-#-----------------------------------------------------------------------------------------------------
-# In[1]:
-# add two tissue priors to get the most reasonable GM tissue prior
-add_two_priors = Node(fsl.BinaryMaths(), name = 'add_two_priors')
-add_two_priors.inputs.operation = 'add'
-
-
-
 
 #-----------------------------------------------------------------------------------------------------
 # In[1]:
@@ -253,17 +235,12 @@ VBM_workflow.connect ([
       (calc_warp_field, jacobian, [('output_image','deformationField')]),
 #------------------------------------------------------------------------------------
       (reg_sub_to_temp, binarize_warped_image, [('warped_image','in_file')]),
-      (reg_sub_to_temp, denoise, [('warped_image','input_image')]),
 
-      (denoise, atropos, [('output_image','intensity_images')]),
+      (reg_sub_to_temp, atropos, [('warped_image','intensity_images')]),
       (binarize_warped_image, atropos, [('out_file','mask_image')]),
-
       (atropos, get_gm, [('posteriors','posteriors')]),
 
-      (get_gm, add_two_priors, [('GM1','operand_file')]),
-      (get_gm, add_two_priors, [('GM2','in_file')]),
-
-      (add_two_priors, modulate_GM, [('out_file','first_input')]),
+      (get_gm, modulate_GM, [('GM','first_input')]),
       (jacobian, modulate_GM, [('jacobian_image','second_input')]),
 
       (modulate_GM, smoothing, [('output_product_image','in_file')]),
