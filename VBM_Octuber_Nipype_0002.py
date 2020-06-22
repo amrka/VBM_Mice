@@ -165,7 +165,7 @@ jacobian.inputs.outputImage = 'Jacobian.nii.gz'
 #Denoise, obviuosly it improves the segmentation
 denoise = Node(ants.DenoiseImage(), name = 'denoise_image')
 denoise.inputs.dimension = 3
-
+denoise.inputs.output_image = 'denoised.nii.gz'
 #-----------------------------------------------------------------------------------------------------
 
 
