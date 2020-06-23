@@ -108,7 +108,7 @@ atlas_to_subject.inputs.interpolation = 'NearestNeighbor'
 
 # the implentation inside nipype did not work
 
-def get_VBM_labels_volumesume(label_image, intensity_image):
+def get_VBM_labels_volume(label_image, intensity_image):
     import ants
     label_image = ants.image_read(label_image)
     print (label_image)
@@ -116,13 +116,13 @@ def get_VBM_labels_volumesume(label_image, intensity_image):
     intensity_image = ants.image_read(intensity_image)
     print (intensity_image)
     geom = ants.label_geometry_measures(label_image, intensity_image)
-    VBM_labels_volumesumes = geom.to_csv('VBM_labels_volumesumes.csv')
-    return VBM_labels_volumesumes
+    VBM_labels_volumes = geom.to_csv('VBM_labels_volumes.csv')
+    return VBM_labels_volumes
 
-get_VBM_labels_volumesume = Node(name ='get_VBM_labels_volumesume',
+get_VBM_labels_volume = Node(name ='get_VBM_labels_volume',
           interface = Function(input_names = ['label_image', 'intensity_image'],
-          output_names = ['VBM_labels_volumesumes'],
-          function = get_VBM_labels_volumesume))
+          output_names = ['VBM_labels_volumes'],
+          function = get_VBM_labels_volume))
 
 
 
@@ -138,12 +138,12 @@ VBM_labels_volumes_workflow.connect ([
       (merge_transforms, atlas_to_subject, [('out','transforms')]),
 
 
-      (selectfiles, get_VBM_labels_volumesume, [('3d_brain_ex','intensity_image')]),
-      (atlas_to_subject, get_VBM_labels_volumesume, [('output_image','label_image')]),
+      (selectfiles, get_VBM_labels_volume, [('3d_brain_ex','intensity_image')]),
+      (atlas_to_subject, get_VBM_labels_volume, [('output_image','label_image')]),
 
 
   ])
 
 
 VBM_labels_volumes_workflow.write_graph(graph2use='flat')
-VBM_labels_volumes_workflow.run('MultiProc', plugin_args={'n_procs': 8})
+VBM_labels_volumes_workflow.run('MultiProc', plugin_args={'n_procs': 4})
