@@ -43,3 +43,35 @@ antsApplyTransforms \
 -o CSF_to_VBM.nii.gz \
 -t VBM_to_TMBTA_InverseComposite.h5 \
 -v
+
+
+#---------------------------------------------------------------------------------------------------------------------
+# Move the atlas as well
+
+# /media/amr/Amr_4TB/Turone_Mouse_Brain_Template/Turone_Mouse_Brain_Atlas/TMBTA_Brain_Atlas.nii
+# /media/amr/Amr_4TB/Turone_Mouse_Brain_Template/Turone_Mouse_Brain_Atlas/TMBTA_ItK_Label_File.txt
+# /media/amr/Amr_4TB/Turone_Mouse_Brain_Template/Turone_Mouse_Brain_Atlas/TMBTA_ListofStructures.xlsx
+# /media/amr/Amr_4TB/Turone_Mouse_Brain_Template/Turone_Mouse_Brain_Atlas/TMBTA_RGB_Label_File.xls
+
+
+cp /media/amr/Amr_4TB/Turone_Mouse_Brain_Template/Turone_Mouse_Brain_Atlas/* \
+/media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration
+
+cd /media/amr/Amr_4TB/Work/October_Acquistion/VBM/registration
+
+Augment.sh TMBTA_Brain_Atlas.nii 10
+
+fslorient -deleteorient TMBTA_Brain_Atlas.nii
+fslorient -setsformcode 1 TMBTA_Brain_Atlas.nii
+fslorient -setqformcode 1 TMBTA_Brain_Atlas.nii
+
+# Move to the VBM_template space
+
+antsApplyTransforms \
+-d 3 \
+-i TMBTA_Brain_Atlas.nii \
+-r VBM_template_manual_ext.nii.gz \
+-o Atlas_to_VBM.nii.gz \
+-t VBM_to_TMBTA_InverseComposite.h5 \
+-n NearestNeighbor \
+-v
