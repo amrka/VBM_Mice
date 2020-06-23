@@ -106,7 +106,7 @@ atlas_to_subject.inputs.interpolation = 'NearestNeighbor'
 #TODO: multiplication for volume size (no. of voxels * 0.1*0.1*0.1)
 #TODO: move the transformations to subject space directly by combining two transfomrations
 
-
+# the implentation inside nipype did not work
 
 def get_VBM_labels_volumesume(label_image, intensity_image):
     import ants
