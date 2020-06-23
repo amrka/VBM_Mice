@@ -4,6 +4,7 @@ from nipype import config
 cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
 
+import nipype.interfaces.fsl as fsl
 import nipype.interfaces.afni as afni
 import nipype.interfaces.ants as ants
 import nipype.interfaces.spm as spm
