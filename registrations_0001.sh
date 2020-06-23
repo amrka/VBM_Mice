@@ -75,3 +75,13 @@ antsApplyTransforms \
 -t VBM_to_TMBTA_InverseComposite.h5 \
 -n NearestNeighbor \
 -v
+
+#-----------------------------------------------------------------------------------------------------------------------
+# To iprove the visualization even more, I downsized teh ambmc model to 0.3 after augmentation
+# and registered TMBTA to it
+
+antsRegistrationSyN.sh -d 3 \
+-m /home/in/aeed/turone/TMBTA_Brain_Template.nii \
+-f /home/in/aeed/turone/rambmc.nii \
+-n 24 \
+-o /home/in/aeed/turone/TMBTA_to_ambmc_
