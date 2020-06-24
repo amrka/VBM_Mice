@@ -110,19 +110,53 @@ atlas_to_subject.inputs.interpolation = 'NearestNeighbor'
 
 def get_VBM_labels_volume(label_image, intensity_image):
     import ants
+    import os
     label_image = ants.image_read(label_image)
     print (label_image)
 
     intensity_image = ants.image_read(intensity_image)
     print (intensity_image)
     geom = ants.label_geometry_measures(label_image, intensity_image)
-    VBM_labels_volumes = geom.to_csv('VBM_labels_volumes.csv')
+    geom.to_csv('VBM_labels_volumes.csv')
+    VBM_labels_volumes = os.path.abspath('VBM_labels_volumes.csv')
     return VBM_labels_volumes
 
 get_VBM_labels_volume = Node(name ='get_VBM_labels_volume',
           interface = Function(input_names = ['label_image', 'intensity_image'],
           output_names = ['VBM_labels_volumes'],
           function = get_VBM_labels_volume))
+
+
+#-----------------------------------------------------------------------------------------------------
+# In[1]:
+#Remove unncessary columns and add a volume in mm3 i.e (no. of voxels * 0.1*0.1*0.1)
+
+def get_volume_mm3(labels_volume_csv):
+    import pandas as pd
+    import os
+    labels = pd.read_csv(labels_volume_csv)
+
+    labels = labels.drop(labels.columns[3:23], axis=1)
+    labels = labels.drop(labels.columns[0], axis=1)
+
+    labels['Volume_in_mm3'] = labels['VolumeInMillimeters']*0.1*0.1*0.1
+    labels = labels.drop('VolumeInMillimeters', axis=1) #this is just number of voxels or volumes in mm3 but considering the augmentation
+
+    # I need one row per subject
+    labels = labels.transpose()
+    labels.to_csv('volumes_in_mm3.csv')
+    volumes_in_mm3 = os.path.abspath('volumes_in_mm3.csv')
+
+    return volumes_in_mm3
+
+get_volume_mm3 = Node(name ='get_volume_mm3',
+          interface = Function(input_names = ['labels_volume_csv'],
+          output_names = ['volumes_in_mm3'],
+          function = get_volume_mm3))
+
+
+
+
 
 
 
@@ -140,6 +174,8 @@ VBM_labels_volumes_workflow.connect ([
 
       (selectfiles, get_VBM_labels_volume, [('3d_brain_ex','intensity_image')]),
       (atlas_to_subject, get_VBM_labels_volume, [('output_image','label_image')]),
+
+      (get_VBM_labels_volume, get_volume_mm3, [('VBM_labels_volumes','labels_volume_csv')]),
 
 
   ])
