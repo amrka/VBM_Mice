@@ -144,14 +144,20 @@ def get_volume_mm3(labels_volume_csv):
 
     # I need one row per subject
     labels = labels.transpose()
-    labels.to_csv('volumes_in_mm3.csv')
+    labels.to_csv('volumes_in_mm3.csv', header = False, index = False)
     volumes_in_mm3 = os.path.abspath('volumes_in_mm3.csv')
 
-    return volumes_in_mm3
+    labels = pd.read_csv('volumes_in_mm3.csv')
+    hpc = labels[['2601.0', '2602.0', '2611.0', '2612.0', '2621.0', '2622.0']]
+    hpc.to_csv('hpc_in_mm3.csv', index = False)
+    hpc_in_mm3 = os.path.abspath('hpc_in_mm3.csv')
+
+
+    return volumes_in_mm3, hpc_in_mm3
 
 get_volume_mm3 = Node(name ='get_volume_mm3',
           interface = Function(input_names = ['labels_volume_csv'],
-          output_names = ['volumes_in_mm3'],
+          output_names = ['volumes_in_mm3', 'hpc_in_mm3'],
           function = get_volume_mm3))
 
 
@@ -182,4 +188,4 @@ VBM_labels_volumes_workflow.connect ([
 
 
 VBM_labels_volumes_workflow.write_graph(graph2use='flat')
-VBM_labels_volumes_workflow.run('MultiProc', plugin_args={'n_procs': 4})
+VBM_labels_volumes_workflow.run('MultiProc', plugin_args={'n_procs': 8})
