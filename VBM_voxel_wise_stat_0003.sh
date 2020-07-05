@@ -51,7 +51,7 @@ palm \
 -m /home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz  \
 -d /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/design_VBM.mat \
 -t /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/design_VBM.con \
--n 10000  -T -V -corrcon    -noniiclass -save1-p -o palm_vbm;
+-n 10000  -T  -corrcon    -noniiclass -save1-p -o palm_vbm;
 #----------------------------------------------------------------------------------------------
 # try the same with fwhm smoothing
 
