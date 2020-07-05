@@ -40,6 +40,18 @@ randomise \
 -t /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/design_VBM.con \
 -n 10000 --uncorrp -T -V;
 
+
+
+
+#now try with palm to correct across contrasts
+
+palm \
+-i /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/VBM_FWHM_3_mod_GM.nii.gz \
+-o /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/VBM_FWHM_3_10000 \
+-m /home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz  \
+-d /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/design_VBM.mat \
+-t /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/design_VBM.con \
+-n 10000  -T -V -corrcon    -noniiclass -save1-p -o palm_vbm;
 #----------------------------------------------------------------------------------------------
 # try the same with fwhm smoothing
 
