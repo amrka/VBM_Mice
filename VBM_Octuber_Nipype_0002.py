@@ -11,7 +11,7 @@ import nipype.interfaces.spm as spm
 
 import nibabel as nb
 
-from nipype.interfaces.utility import IdentityInterface, Function
+from nipype.interfaces.utility import IdentityInterface, Function, Select
 from os.path import join as opj
 from nipype.interfaces.io import SelectFiles, DataSink
 from nipype.pipeline.engine import Workflow, Node, MapNode
@@ -35,7 +35,7 @@ experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 #                 '365', '366']
 
 # subject_list = ['Agarose'] # creates an error, I removed it from the list
-subject_list = ['274', '362']
+subject_list = [ '362']
 
 
 output_dir  = 'VBM/VBM_output_preproc'
@@ -100,7 +100,7 @@ bias_corr.inputs.bspline_order = 5
 #Brain extraction, bias field correction is included inside
 brain_ext = Node(ants.BrainExtraction(), name = 'Brain_Extraction')
 brain_ext.inputs.dimension = 3
-brain_ext.inputs.num_threads = 4
+brain_ext.inputs.num_threads = 8
 brain_ext.inputs.brain_template = study_based_template
 brain_ext.inputs.brain_probability_mask = study_based_template_mask
 # brain_ext.inputs.num_threads = 4
@@ -117,7 +117,7 @@ reg_sub_to_temp.inputs.fixed_image=study_based_template
 reg_sub_to_temp.inputs.args='--float'
 reg_sub_to_temp.inputs.collapse_output_transforms=True
 reg_sub_to_temp.inputs.initial_moving_transform_com=True
-reg_sub_to_temp.inputs.num_threads=4
+reg_sub_to_temp.inputs.num_threads=8
 reg_sub_to_temp.inputs.output_inverse_warped_image=True
 reg_sub_to_temp.inputs.output_warped_image=True
 reg_sub_to_temp.inputs.sigma_units=['vox']*3
@@ -159,8 +159,14 @@ reg_sub_to_temp.inputs.float=True
 # calc_warp_field.inputs.dimension = 3
 # calc_warp_field.inputs.print_out_composite_warp_file = True
 # calc_warp_field.inputs.output_image = 'Warp_Field.nii.gz'
+#-----------------------------------------------------------------------------------------------------
+# In[1]
+# Here we just get the warp field
+# Notice I changed reg_sub_to_temp.inputs.write_composite_transform to False
+# So, it outputs the warpfield seperate from the affine transform
 
-
+get_warp_field = Node(Select(), name = 'get_warp_field')
+get_warp_field.inputs.index = [1]
 
 
 
@@ -239,11 +245,9 @@ VBM_workflow.connect ([
       (bias_corr, brain_ext, [('output_image','anatomical_image')]),
       (brain_ext, reg_sub_to_temp, [('BrainExtractionBrain','moving_image')]),
 
+      (reg_sub_to_temp, get_warp_field, [('forward_transforms','inlist')]),
 
-      (reg_sub_to_temp, calc_warp_field, [('composite_transform','transforms')]),
-      (brain_ext, calc_warp_field, [('BrainExtractionBrain','input_image')]),
-
-      (calc_warp_field, jacobian, [('output_image','deformationField')]),
+      (get_warp_field, jacobian, [('out','deformationField')]),
 #------------------------------------------------------------------------------------
       (reg_sub_to_temp, binarize_warped_image, [('warped_image','in_file')]),
 
