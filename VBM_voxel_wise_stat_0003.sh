@@ -43,14 +43,16 @@ cd /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats
 
 
 
-#now try with palm to correct across contrasts
-# better to work with uncompressed when you deal with palm
+# 7- better to work with uncompressed when you deal with palm
 gzip -d /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/VBM_FWHM_3_mod_GM.nii.gz
+#now try with palm to correct across contrasts
+
 
 cp /home/in/aeed/Work/October_Acquistion/VBM/registration/VBM_template_manual_ext_mask.nii.gz \
 /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/
 
 gzip -d /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/VBM_template_manual_ext_mask.nii.gz
+
 
 palm \
 -i /home/in/aeed/Work/October_Acquistion/VBM/VBM_stats/VBM_FWHM_3_mod_GM.nii \
