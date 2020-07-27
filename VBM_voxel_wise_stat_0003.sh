@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 #Now, we have 16 vs 16
 #I tried eliminate 271,272 -> results were the same, but not as symmetric. So, I put them again
