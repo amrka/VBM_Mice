@@ -21,3 +21,6 @@ cp \
 cp \
 /media/amr/Amr_4TB/Work/October_Acquistion/Plus_Maze_output/plus_maze_gp_names.csv \
 /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr
+
+
+# I did the designs manually, by calling Glm and fill in the data from the CSV files
