@@ -55,47 +55,53 @@ datasink.inputs.base_directory = experiment_dir
 substitutions = [('_map_id_', '')]
 
 datasink.inputs.substitutions = substitutions
+
+
 #-----------------------------------------------------------------------------------------------------
-def palm_corr(in_file, mask_file, design, contrast):
+# designs and contrasts done manullay
+
+designs = [
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.mat']
+
+contrasts = [
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.con']
+
+
+#-----------------------------------------------------------------------------------------------------
+def palm_corr(in_file, mask, design, contrast):
     import os
     from glob import glob
     from nipype.interfaces.base import CommandLine
-
-    designs = [
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.mat',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.mat']
-
-    contrasts = [
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.con',
-    '/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.con']
 
 
     cmd = ("palm \
@@ -105,15 +111,17 @@ def palm_corr(in_file, mask_file, design, contrast):
     -T -noniiclass -n 10 -corrcon -save1-p -o palm_corr_vbm")
 
 
-    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
+    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask, design=design, contrast=contrast ))
     results = cl.run()
 
-palm_corr = MapNode(name = 'palm_corr', iterfield = ['design', 'contrast'],
-                 interface = Function(input_names = ['in_file', 'mask_file'],
+palm_corr = Node(name = 'palm_corr',
+                 interface = Function(input_names = ['in_file', 'mask', 'design', 'contrast'],
                                       function = palm_corr))
 
-palm_corr.inputs.design = designs
-palm_corr.inputs.contrast = contrasts
+
+palm_corr.iterables = [("design", designs),("contrast", contrasts)]
+palm_corr.synchronize = True # synchronize here serves to make sure design and contrast are used in pairs
+# Not using all the possible permuatations
 #-----------------------------------------------------------------------------------------------------
 VBM_corr.connect ([
 
