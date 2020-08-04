@@ -12,15 +12,15 @@
 # for each column, I subtract the mean and create design from each one of them
 # in those cases the DOF will be 32-2 (rows - columns(contrasts))
 
-mkdir /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr
+mkdir /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs
 
 cp \
 /media/amr/Amr_4TB/Work/October_Acquistion/Open_Field_output/open_field_gp_names.csv \
-/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr
+/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs
 
 cp \
 /media/amr/Amr_4TB/Work/October_Acquistion/Plus_Maze_output/plus_maze_gp_names.csv \
-/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr
+/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs
 
 
 # I did the designs manually, by calling Glm and fill in the data from the CSV files
