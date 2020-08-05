@@ -120,11 +120,14 @@ def palm_corr(in_file, mask, design, contrast):
     cl.run()
     tstat1 = os.path.abspath('palm_corr_vbm_vox_tstat_c1.nii.gz')
     tstat2 = os.path.abspath('palm_corr_vbm_vox_tstat_c2.nii.gz')
+    P_value1 = os.path.abspath('palm_corr_vbm_tfce_tstat_fwep_c1.nii.gz')
+    P_value2 = os.path.abspath('palm_corr_vbm_tfce_tstat_fwep_c2.nii.gz')
+
     return tstat1, tstat2
 
 palm_corr = Node(name = 'palm_corr',
                  interface = Function(input_names = ['in_file', 'mask', 'design', 'contrast'],
-                                        output_names = ['tstat1', 'tstat2'],
+                                        output_names = ['tstat1', 'tstat2', 'P_value1', 'P_value2'],
                                       function = palm_corr))
 
 
@@ -191,6 +194,9 @@ VBM_corr.connect ([
 
       (palm_corr, datasink, [('tstat1','tstat1')]),
       (palm_corr, datasink, [('tstat2','tstat2')]),
+
+      (palm_corr, datasink, [('P_value1','P_value1')]),
+      (palm_corr, datasink, [('P_value2','P_value2')]),
 #==================================r1==============================================
       (palm_corr, square1, [('tstat1','in_file')]),
 
