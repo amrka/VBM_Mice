@@ -123,7 +123,7 @@ def palm_corr(in_file, mask, design, contrast):
     P_value1 = os.path.abspath('palm_corr_vbm_tfce_tstat_fwep_c1.nii.gz')
     P_value2 = os.path.abspath('palm_corr_vbm_tfce_tstat_fwep_c2.nii.gz')
 
-    return tstat1, tstat2
+    return tstat1, tstat2, P_value1, P_value2
 
 palm_corr = Node(name = 'palm_corr',
                  interface = Function(input_names = ['in_file', 'mask', 'design', 'contrast'],
