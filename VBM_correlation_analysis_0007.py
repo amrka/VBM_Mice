@@ -18,7 +18,7 @@ from nipype.pipeline.engine import Workflow, Node, MapNode
 import numpy as np
 import matplotlib.pyplot as plt
 #-------------------------------------------------------------------------------------
-experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
+experiment_dir = '/home/in/aeed/Work/October_Acquistion/'
 
 
 map_list=  ['VBM_stats']
@@ -53,8 +53,8 @@ datasink.inputs.container = output_dir
 datasink.inputs.base_directory = experiment_dir
 
 substitutions = [('_map_id_', ''),
-('_contrast_..media..amr..Amr_4TB..Work..October_Acquistion..VBM..VBM_corr_designs..', ''),
-('design_..media..amr..Amr_4TB..Work..October_Acquistion..VBM..VBM_corr_designs..', ''),
+('_contrast_..home..in..aeed..Work..October_Acquistion..VBM..VBM_corr_designs..', ''),
+('design_..home..in..aeed..Work..October_Acquistion..VBM..VBM_corr_designs..', ''),
 ]
 
 datasink.inputs.substitutions = substitutions
@@ -64,41 +64,41 @@ datasink.inputs.substitutions = substitutions
 # designs and contrasts done manullay
 
 designs = [
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.mat',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.mat'
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.mat',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.mat'
 ]
 
 contrasts = [
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.con',
-'/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.con'
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_open_to_close_ratio.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_center_percent.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_closed_arms_percent.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_time_in_opened_arms_percent.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_total_distance.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/EPM_velocity.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_center_corners_ratio.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_center.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_percent_in_corners.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_sec_in_center.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_distance.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_total_time_in_corners.con',
+'/home/in/aeed/Work/October_Acquistion/VBM/VBM_corr_designs/OF_velocity.con'
 ]
 
 
@@ -225,5 +225,5 @@ VBM_corr.connect ([
 
 
 VBM_corr.write_graph(graph2use='colored', format='svg', simple_form=True)
-# VBM_corr.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
-VBM_corr.run('MultiProc', plugin_args={'n_procs': 8})
+VBM_corr.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
+# VBM_corr.run('MultiProc', plugin_args={'n_procs': 8})
