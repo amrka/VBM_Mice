@@ -157,6 +157,10 @@ div_by_denom1 = Node(fsl.BinaryMaths(), name='div_by_denom1')
 div_by_denom1.inputs.operation = 'div'
 div_by_denom1.inputs.out_file = 'divided_by_denominator.nii.gz'
 
+
+# the correlation coefficient was tested against using the flag -pearson
+# as well as aginst using just the bash commands written by anderson (see above)
+# the results are 100% exactly the same
 create_corr1 = Node(fsl.ImageMaths(), name='create_corr1')
 create_corr1.inputs.op_string = '-sqrt -mul'
 create_corr1.inputs.out_file = 'corr_coef_r1.nii.gz'
