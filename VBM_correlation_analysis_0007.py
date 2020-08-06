@@ -113,7 +113,8 @@ def palm_corr(in_file, mask, design, contrast):
     -i {in_file} \
     -m {mask} \
     -d {design} -t {contrast} \
-    -T -noniiclass -n 10000 -corrcon -save1-p -o palm_corr_vbm")
+    -T -noniiclass -n 1000 -corrcon -save1-p -o palm_corr_vbm")
+    # start with 1000 and if you find something interesting, go to 10000
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask=mask, design=design, contrast=contrast ))
@@ -235,6 +236,6 @@ VBM_corr.connect ([
 
 
 VBM_corr.write_graph(graph2use='colored', format='svg', simple_form=True)
-VBM_corr.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50, '--mem':16000})
+VBM_corr.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50, 'sbatch_args':'--mem=16G'})
 # plugin_args={'sbatch_args': '--time=24:00:00 -N1 -c2 --mem=40G','max_jobs':200}
 # VBM_corr.run('MultiProc', plugin_args={'n_procs': 8})
