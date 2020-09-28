@@ -38,26 +38,26 @@ for slice_no in {526,500,476,451,425,399,373,347,321,295};do
 
 	${fsleyes} render  \
 	--scene ortho -no   --displaySpace world --hidex --hidez    -vl 170 ${slice_no} 124 \
-	--hideCursor   --outfile    ${dir}/VBM_${stat_map_name}_${slice_no}.png   \
+	--hideCursor   --outfile    ${dir}/VBM_${stat_map_name}_c${contrast_no}_${slice_no}.png   \
 	${rambmc} --displayRange 50 210  \
 	/Users/amr/Dropbox/thesis/3D/VBM_corr/behav_fig/${stat_map_name}_rambmc_c${contrast_no}.nii.gz --cmap red-yellow     --displayRange 0.95  1
 
-	convert  ${dir}/VBM_${stat_map_name}_${slice_no}.png -crop 740x480+30+60  ${dir}/VBM_${stat_map_name}_cropped_${slice_no}.png
+	convert  ${dir}/VBM_${stat_map_name}_c${contrast_no}_${slice_no}.png -crop 740x480+30+60  ${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_${slice_no}.png
 
 done
 
 pngappend \
-${dir}/VBM_${stat_map_name}_cropped_295.png + \
-${dir}/VBM_${stat_map_name}_cropped_321.png + \
-${dir}/VBM_${stat_map_name}_cropped_347.png + \
-${dir}/VBM_${stat_map_name}_cropped_373.png + \
-${dir}/VBM_${stat_map_name}_cropped_399.png - \
-${dir}/VBM_${stat_map_name}_cropped_425.png + \
-${dir}/VBM_${stat_map_name}_cropped_451.png + \
-${dir}/VBM_${stat_map_name}_cropped_476.png + \
-${dir}/VBM_${stat_map_name}_cropped_500.png + \
-${dir}/VBM_${stat_map_name}_cropped_526.png  \
-${dir}/${stat_map_name}_output.png
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_295.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_321.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_347.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_373.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_399.png - \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_425.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_451.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_476.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_500.png + \
+${dir}/VBM_${stat_map_name}_c${contrast_no}_cropped_526.png  \
+${dir}/${stat_map_name}_c${contrast_no}_output.png
 
 # remove background
-convert ${dir}/${stat_map_name}_output.png -transparent black ${dir}/${stat_map_name}_output_no_bg.png
+convert ${dir}/${stat_map_name}_c${contrast_no}_output.png -transparent black ${dir}/${stat_map_name}_c${contrast_no}_output_no_bg.png
