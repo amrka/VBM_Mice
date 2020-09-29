@@ -18,7 +18,14 @@ stat_map_name=`echo ${stat_map} | sed  s/.*con_// | sed s[.mat/.*[[`;
 
 contrast_no=`echo ${stat_map} | sed  s/.*_c// | sed s[.nii.gz[[`
 
+# somehow after running 10,000 perumatations (at 1000, that did not happen), these maps has qformcode of 0
+# screwing up everything
+# I checked maps with 1000 permutations and even the same maps, they all appear to be good
+fslorient -setqformcode 1 ${stat_map}
+fslorient -setsformcode 1 ${stat_map}
+
 # first transform the stat maps
+
 antsApplyTransforms \
 -i ${stat_map} \
 -r '/Volumes/Amr_1TB/VBM/registration/rambmc.nii' \
@@ -26,6 +33,9 @@ antsApplyTransforms \
 -t '/Volumes/Amr_1TB/VBM/registration/VBM_to_TMBTA_Composite.h5' \
 -o /Users/amr/Dropbox/thesis/3D/VBM_corr/behav_fig/${stat_map_name}_rambmc_c${contrast_no}.nii.gz \
 -v --float
+
+fslmaths /Users/amr/Dropbox/thesis/3D/VBM_corr/behav_fig/${stat_map_name}_rambmc_c${contrast_no}.nii.gz \
+-mul 1 /Users/amr/Dropbox/thesis/3D/VBM_corr/behav_fig/${stat_map_name}_rambmc_c${contrast_no}.nii.gz -odt float
 #float64 crashes fsleyes
 
 #=============================================================================================================================================================
@@ -74,6 +84,9 @@ stat_map=/Users/amr/Dropbox/thesis/3D/VBM_corr/EPM_time_in_center_percent.con_EP
 stat_map_name=`echo ${stat_map} | sed  s/.*con_// | sed s[.mat/.*[[`;
 
 contrast_no=`echo ${stat_map} | sed  s/.*_c// | sed s[.nii.gz[[`
+
+fslorient -setqformcode 1 ${stat_map}
+fslorient -setsformcode 1 ${stat_map}
 
 # first transform the stat maps
 antsApplyTransforms \
@@ -131,6 +144,9 @@ stat_map_name=`echo ${stat_map} | sed  s/.*con_// | sed s[.mat/.*[[`;
 
 contrast_no=`echo ${stat_map} | sed  s/.*_c// | sed s[.nii.gz[[`
 
+fslorient -setqformcode 1 ${stat_map}
+fslorient -setsformcode 1 ${stat_map}
+
 # first transform the stat maps
 antsApplyTransforms \
 -i ${stat_map} \
@@ -187,6 +203,9 @@ stat_map=/Users/amr/Dropbox/thesis/3D/VBM_corr/EPM_time_in_center.con_EPM_time_i
 stat_map_name=`echo ${stat_map} | sed  s/.*con_// | sed s[.mat/.*[[`;
 
 contrast_no=`echo ${stat_map} | sed  s/.*_c// | sed s[.nii.gz[[`
+
+fslorient -setqformcode 1 ${stat_map}
+fslorient -setsformcode 1 ${stat_map}
 
 # first transform the stat maps
 antsApplyTransforms \
