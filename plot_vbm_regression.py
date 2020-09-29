@@ -115,3 +115,19 @@ p_value_image = '/Users/amr/Dropbox/thesis/3D/VBM_corr/EPM_time_in_center_percen
 
 
 plot_vbm_correlation(vbm_4D_image, mat, p_value_image)
+
+
+vbm_4D_image = '/Volumes/Amr_1TB/VBM/VBM_stats/VBM_FWHM_3_mod_GM.nii'
+mat = '/Volumes/Amr_1TB/VBM/VBM_corr_designs/EPM_time_in_center.mat'
+p_value_image = '/Users/amr/Dropbox/thesis/3D/VBM_corr/EPM_time_in_center.con_EPM_time_in_center.mat/palm_corr_vbm_tfce_tstat_fwep_c1.nii.gz'
+
+
+plot_vbm_correlation(vbm_4D_image, mat, p_value_image)
+
+
+vbm_4D_image = '/Volumes/Amr_1TB/VBM/VBM_stats/VBM_FWHM_3_mod_GM.nii'
+mat = '/Volumes/Amr_1TB/VBM/VBM_corr_designs/EPM_time_in_center.mat'
+p_value_image = '/Users/amr/Dropbox/thesis/3D/VBM_corr/EPM_time_in_center.con_EPM_time_in_center.mat/palm_corr_vbm_tfce_tstat_fwep_c2.nii.gz'
+
+
+plot_vbm_correlation(vbm_4D_image, mat, p_value_image)
