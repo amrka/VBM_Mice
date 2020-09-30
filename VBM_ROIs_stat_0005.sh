@@ -7,8 +7,8 @@ mkdir /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs
 cd /media/amr/Amr_4TB/Work/October_Acquistion/Data
 
 for folder in *;do
-    cp /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_labels_volumes_workingdir_preproc/VBM_labels_volumes_workflow/_subject_id_${folder}/get_volume_mm3/hpc_in_mm3.csv \
-    /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/${folder}_hpc_in_mm3.csv;
+    cp /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_labels_volumes_workingdir_preproc/VBM_labels_volumes_workflow/_subject_id_${folder}/get_volume_mm3/volumes_in_mm3.csv \
+    /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/${folder}_volumes_in_mm3.csv;
 done
 
 
@@ -22,11 +22,18 @@ cat << EOF > pyscript.py
 import pandas as pd
 import glob
 
-dfs = sorted(glob.glob('/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/*_hpc_in_mm3.csv', ))
-result = pd.concat([pd.read_csv(df) for df in dfs])
+dfs = sorted(glob.glob('/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/*_volumes_in_mm3.csv', ))
+result = pd.concat([pd.read_csv(df) for df in dfs], sort=False) # to prevent the pd from sorting the columns
+#replace nan values with zeros
+# NaN was the reason behind lines contain less columns in palm
 
+result = result.fillna(0)
 
-result.to_csv('/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/merge_hpc.csv', header=False, index=False)
+# one with header to recognize the results
+result.to_csv('/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/merge_volumes_header.csv', header=True, index=False)
+
+# another one without header for palm
+result.to_csv('/media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/merge_volumes_for_palm.csv', header=False, index=False)
 
 
 EOF
@@ -36,8 +43,8 @@ chmod 755 pyscript.py
 ./pyscript.py
 
 palm \
--i /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/merge_hpc.csv
+-i /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/ROIs/merge_volumes_for_palm.csv \
 -d /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/design_VBM.mat \
 -t /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/design_VBM.con \
--o /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/results_hpc_sum \
--corrcon -fdr
+-o /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_stats/results_volumes \
+-corrcon -fdr -save1-p -twotail
