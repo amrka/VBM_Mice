@@ -82,8 +82,8 @@ def plot_vbm_correlation(vbm_4D_image, mat, p_value_image):
 
     plt.xticks(fontsize=14, rotation=45, color='#ffffffff')
     plt.yticks(fontsize=14, color='#ffffffff')
-    plt.scatter(voxel_values[:16], behav[:16], marker='o', color='#377eb899')
-    plt.scatter(voxel_values[16:], behav[16:], marker='<', color='#e41a1c99')
+    plt.scatter(voxel_values[:16], behav[:16], marker='o', color='#e41a1c')
+    plt.scatter(voxel_values[16:], behav[16:], marker='<', color='#377eb8')
     plt.ylabel("{0}".format(mat_basename_no_ext), fontsize=18, fontname='Arial', color='#ffffffff')
     plt.plot(voxel_values, poly1d_fn(voxel_values), color='#ffffffff')  # plot the regression line
     # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
